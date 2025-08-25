@@ -24,11 +24,7 @@ export default function NavbarWithFilters() {
             <DrawerTitle>Filters</DrawerTitle>
           </DrawerHeader>
           <div className="flex-1 overflow-y-auto">
-            <FiltersSidebar
-              onChange={(filters) => {
-                console.log("Filters applied:", filters);
-              }}
-            />
+            <FiltersSidebar />
           </div>
 
           <div className="border-t p-4">

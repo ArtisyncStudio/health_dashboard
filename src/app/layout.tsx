@@ -4,6 +4,7 @@ import { Montserrat, Playfair_Display } from "next/font/google";
 import { ReactQueryClientProvider } from "@/utils/react-query";
 import Navbar from "@/components/page/navbar";
 import Footer from "@/components/page/footer";
+import { FiltersProvider } from "@/context/FiltersContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -37,9 +38,11 @@ export default function RootLayout({ children }: LayoutProps) {
     >
       <body className={`${montserrat.variable}`}>
         <ReactQueryClientProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <FiltersProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </FiltersProvider>
         </ReactQueryClientProvider>
       </body>
     </html>

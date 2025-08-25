@@ -1,9 +1,6 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { useState } from "react";
-import FiltersSidebar from "../Filters/FiltersSidebar";
-
 import {
   Card,
   CardContent,
@@ -19,7 +16,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { returnData } from "../Filters/dataRetrieval";
+import { returnData } from "@/components/Filters/dataRetrieval";
+import { useFilters } from "@/context/FiltersContext";
 
 const chartConfig = {
   desktop: {
@@ -29,13 +27,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function ChartBarDefault() {
-  // keep track of filters here
-  const [filters, setFilters] = useState<{ age: string; race: string }>({
-    age: "",
-    race: "",
-  });
+  const { filters } = useFilters();
 
-  // pass filters into your hook
   const { count, loading } = returnData("1", "aa4", filters);
   const { count: count1 } = returnData("2", "aa4", filters);
 
@@ -46,9 +39,6 @@ export default function ChartBarDefault() {
 
   return (
     <>
-      {/* Sidebar passes filters back to here */}
-      <FiltersSidebar onChange={setFilters} />
-
       <Card>
         <CardHeader>
           <CardTitle>Insurance Bar Chart</CardTitle>
@@ -71,7 +61,7 @@ export default function ChartBarDefault() {
                   cursor={false}
                   content={<ChartTooltipContent hideLabel />}
                 />
-                <Bar dataKey="desktop" fill="#0022FF" radius={8} />
+                <Bar dataKey="desktop" fill="#008da8" radius={8} />
               </BarChart>
             </ChartContainer>
           )}

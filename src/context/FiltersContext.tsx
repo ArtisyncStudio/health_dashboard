@@ -1,20 +1,22 @@
 // context/FiltersContext.tsx
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-type Filters = {
+interface Filters {
   age: string;
   race: string;
-};
+}
 
-type FiltersContextType = {
+interface FiltersContextType {
   filters: Filters;
   setFilters: (filters: Filters) => void;
-};
+}
 
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined);
 
-export function FiltersProvider({ children }: { children: ReactNode }) {
+export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [filters, setFilters] = useState<Filters>({ age: "", race: "" });
 
   return (
@@ -22,12 +24,10 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
       {children}
     </FiltersContext.Provider>
   );
-}
+};
 
-export function useFilters() {
-  const context = useContext(FiltersContext);
-  if (!context) {
-    throw new Error("useFilters must be used within a FiltersProvider");
-  }
-  return context;
-}
+export const useFilters = () => {
+  const ctx = useContext(FiltersContext);
+  if (!ctx) throw new Error("useFilters must be used within a FiltersProvider");
+  return ctx;
+};

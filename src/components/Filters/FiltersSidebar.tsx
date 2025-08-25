@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Drawer } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useFilters } from "@/context/FiltersContext";
 
 const races = [
   "White/Caucasian",
@@ -15,6 +16,7 @@ const races = [
 const ageCategories = [
   "18-24",
   "25-34",
+  "35-44",
   "45-54",
   "55-64",
   "65-74",
@@ -24,16 +26,16 @@ const ageCategories = [
 interface FiltersSidebarProps {
   open?: boolean;
   onClose?: () => void;
-  onChange?: (filters: { age: string; race: string }) => void;
 }
 
 const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   open = false,
   onClose = () => {},
-  onChange = () => {},
 }) => {
   const [selectedAge, setSelectedAge] = useState<string>("");
   const [selectedRace, setSelectedRace] = useState<string>("");
+
+  const { setFilters } = useFilters();
 
   useEffect(() => {
     if (!open) {
@@ -43,15 +45,14 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   }, [open]);
 
   useEffect(() => {
-    onChange({ age: selectedAge, race: selectedRace });
-  }, [selectedAge, selectedRace, onChange]);
+    setFilters({ age: selectedAge, race: selectedRace });
+  }, [selectedAge, selectedRace, setFilters]);
 
   return (
     <Drawer open={open} onClose={onClose}>
       <div className="flex w-72 flex-col gap-6 p-6">
         <h2 className="mb-2 text-lg font-semibold">Filters</h2>
 
-        {/* Age group filter */}
         <div>
           <label className="mb-2 block text-sm font-medium">Age Group</label>
           <div className="flex flex-col gap-2">
@@ -72,7 +73,6 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
           </div>
         </div>
 
-        {/* Race filter */}
         <div>
           <label className="mb-2 block text-sm font-medium">Race</label>
           <div className="flex flex-col gap-2">
@@ -93,7 +93,6 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
           </div>
         </div>
 
-        {/* Reset button */}
         <Button
           variant="outline"
           onClick={() => {
