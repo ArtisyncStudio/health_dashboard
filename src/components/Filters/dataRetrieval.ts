@@ -12,7 +12,11 @@ interface LookupTable {
   };
 }
 
-export function returnData(option?: string, codeName?: string, filters?: { age: string, race: string }) {
+export function returnData(
+  option?: string,
+  codeName?: string,
+  filters?: { age: string; race: string },
+) {
   const { data, loading, error } = useCSVData("/data/CHM2022.csv") as {
     data: DataRow[];
     loading: boolean;
@@ -54,7 +58,7 @@ export function returnData(option?: string, codeName?: string, filters?: { age: 
       3: "Asian",
       4: "American Indian/Alaska native",
       5: "Other",
-      98: "Don't know/No response"
+      98: "Don't know/No response",
     };
 
     let matchesRace = true;

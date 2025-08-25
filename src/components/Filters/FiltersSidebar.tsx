@@ -18,7 +18,7 @@ const ageCategories = [
   "45-54",
   "55-64",
   "65-74",
-  "75 and older"
+  "75 and older",
 ];
 
 interface FiltersSidebarProps {
