@@ -12,7 +12,7 @@ interface LookupTable {
   };
 }
 
-export function useInsuranceCount(option?: string, codeName?: string) {
+export function returnData(option?: string, codeName?: string, filters?: { age: string, race: string }) {
   const { data, loading, error } = useCSVData("/data/CHM2022.csv") as {
     data: DataRow[];
     loading: boolean;
@@ -35,9 +35,43 @@ export function useInsuranceCount(option?: string, codeName?: string) {
     return { count: 0, loading: false, error: error || codebookError };
   }
 
-  const filtered = (data as DataRow[]).filter(
-    (row) => row[codeName!] === option,
-  );
+  const filtered = data.filter((row) => {
+    const matchesOption = row[codeName!] === option;
+
+    const ageGroups: Record<number, string> = {
+      1: "18-24",
+      2: "25-34",
+      3: "35-44",
+      4: "45-54",
+      5: "55-64",
+      6: "65-74",
+      7: "75 and older",
+    };
+
+    const raceGroups: Record<number, string> = {
+      1: "White/Caucasian",
+      2: "Black/African American",
+      3: "Asian",
+      4: "American Indian/Alaska native",
+      5: "Other",
+      98: "Don't know/No response"
+    };
+
+    let matchesRace = true;
+    if (filters?.race) {
+      const cat = Number(row["ab17"]);
+      matchesRace = raceGroups[cat] === filters.race;
+    }
+
+    let matchesAgeGroup = true;
+    if (filters?.age) {
+      const cat = Number(row["ab19_Cat"]);
+      console.log(filters.age);
+      matchesAgeGroup = ageGroups[cat] === filters.age;
+    }
+
+    return matchesOption && matchesRace && matchesAgeGroup;
+  });
 
   return { count: filtered.length, loading: false, error: null };
 }
