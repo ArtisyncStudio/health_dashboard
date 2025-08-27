@@ -6,7 +6,11 @@ import descriptions from "@/data/Descriptions";
 const Home = () => {
   return (
     <div className="w-full flex-wrap overflow-x-hidden">
-      <Header title="Community Health Survey" description={descriptions[0]} />
+      <Header
+        title="Community Health Survey"
+        description={descriptions[0]}
+        titleSize="text-5xl"
+      />
       <CoachellaPopulation />
     </div>
   );

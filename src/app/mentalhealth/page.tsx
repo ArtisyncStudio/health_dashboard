@@ -7,6 +7,7 @@ const page = () => {
       <Header
         title="Depression and Mental Health"
         description={descriptions[2]}
+        titleSize="text-5xl"
       />
     </div>
   );

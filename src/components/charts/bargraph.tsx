@@ -1,8 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -18,56 +16,62 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "A bar chart";
-
-const chartData = [
-  { response: "No", desktop: 186 },
-  { response: "Yes", desktop: 305 },
-];
+import { returnData } from "@/components/Filters/dataRetrieval";
+import { useFilters } from "@/context/FiltersContext";
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Responses",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
-export function ChartBarDefault() {
+export default function ChartBarDefault() {
+  const { filters } = useFilters();
+
+  const { count, loading } = returnData("1", "aa4", filters);
+  const { count: count1 } = returnData("2", "aa4", filters);
+
+  const chartData = [
+    { response: "No", desktop: count1 },
+    { response: "Yes", desktop: count },
+  ];
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="desktop" fill="#0022FF" radius={8} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+    <>
+      <Card>
+        <CardHeader>
+          <CardTitle>Insurance Bar Chart</CardTitle>
+          <CardDescription>Coverage breakdown</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ChartContainer config={chartConfig}>
+              <BarChart accessibilityLayer data={chartData}>
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="response"
+                  tickLine={false}
+                  tickMargin={10}
+                  axisLine={false}
+                />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar dataKey="desktop" fill="#008da8" radius={8} />
+              </BarChart>
+            </ChartContainer>
+          )}
+        </CardContent>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+          <div className="text-muted-foreground leading-none">
+            Showing total Health Coverage Responses
+          </div>
+        </CardFooter>
+      </Card>
+    </>
   );
 }
-
-export default ChartBarDefault;
