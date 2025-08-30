@@ -55,7 +55,7 @@ export function returnData(
     const genders: Record<number, string> = {
       1: "Male",
       2: "Female",
-      98: "Don't Know/No response"
+      98: "Don't Know/No response",
     };
 
     let matchesGender = true;

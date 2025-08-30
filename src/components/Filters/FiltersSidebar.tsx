@@ -5,11 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFilters } from "@/context/FiltersContext";
 
-const genders = [
-  "Male",
-  "Female",
-  "Don't Know/No response",
-];
+const genders = ["Male", "Female", "Don't Know/No response"];
 
 const ageCategories = [
   "18-24",
@@ -42,19 +38,18 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   const toggleSelection = (
     value: string,
     selected: string[],
-    setSelected: React.Dispatch<React.SetStateAction<string[]>>
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>,
   ) => {
     setSelected(
       selected.includes(value)
         ? selected.filter((v) => v !== value)
-        : [...selected, value]
+        : [...selected, value],
     );
   };
 
   return (
     <Drawer open={open} onClose={onClose}>
       <div className="flex w-72 flex-col gap-6 p-6">
-
         <div>
           <label className="mb-2 block text-sm font-medium">Age Group</label>
           <div className="flex flex-col gap-2">

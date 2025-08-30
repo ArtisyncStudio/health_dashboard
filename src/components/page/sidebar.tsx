@@ -29,7 +29,7 @@ export default function NavbarWithFilters() {
 
           <div className="border-t p-4">
             <DrawerClose asChild>
-              <Button className="w-full">Apply</Button>
+              <Button className="bg-harc-darkblue w-full">Close</Button>
             </DrawerClose>
           </div>
         </DrawerContent>
