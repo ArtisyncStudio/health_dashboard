@@ -14,15 +14,13 @@ const Navbar: React.FC = () => {
     setMounted(true);
   }, []);
 
-  // Prevent closing menu when clicking inside the sidebar
   const handleSidebarClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 
   return (
     <>
-      <nav className="relative">
-        {/* Hamburger Icon */}
+      <nav className="sticky top-0 z-10">
         {mounted && (
           <button
             className="absolute top-4 left-4 z-30 md:hidden"
@@ -31,7 +29,6 @@ const Navbar: React.FC = () => {
             type="button"
           >
             {open ? (
-              // Close Icon (X)
               <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
                 <path
                   stroke="currentColor"
@@ -41,7 +38,6 @@ const Navbar: React.FC = () => {
                 />
               </svg>
             ) : (
-              // Hamburger Icon
               <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
                 <path
                   stroke="currentColor"
@@ -54,7 +50,6 @@ const Navbar: React.FC = () => {
           </button>
         )}
 
-        {/* Off-canvas menu overlay */}
         <div
           className={`bg-opacity-40 fixed inset-0 z-20 bg-black transition-opacity duration-300 ${
             open
@@ -70,7 +65,6 @@ const Navbar: React.FC = () => {
           } md:bg-harc-darkblue md:static md:flex md:w-full md:translate-x-0 md:flex-col`}
           onClick={handleSidebarClick}
         >
-          {/* Close button for mobile */}
           <button
             className="absolute top-4 right-4 md:hidden"
             aria-label="Close menu"
@@ -198,13 +192,16 @@ const Navbar: React.FC = () => {
           </div>
         </aside>
       </nav>
-      <div className="flex justify-center px-6 pb-4 md:justify-start md:px-4">
+      <Link
+        href="/"
+        className="flex justify-center px-6 pb-4 md:justify-start md:px-4"
+      >
         <Image
           src={HarcLogo}
           alt="Harc Logo"
           className="w-1/3 md:w-1/6 lg:w-1/8"
         />
-      </div>
+      </Link>
     </>
   );
 };
