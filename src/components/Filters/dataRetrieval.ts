@@ -15,7 +15,7 @@ interface LookupTable {
 export function returnData(
   option?: string,
   codeName?: string,
-  filters?: { age: string; race: string },
+  filters?: { age: string[]; gender: string[] },
 ) {
   const { data, loading, error } = useCSVData("/data/CHM2022.csv") as {
     data: DataRow[];
@@ -52,29 +52,25 @@ export function returnData(
       7: "75 and older",
     };
 
-    const raceGroups: Record<number, string> = {
-      1: "White/Caucasian",
-      2: "Black/African American",
-      3: "Asian",
-      4: "American Indian/Alaska native",
-      5: "Other",
-      98: "Don't know/No response",
+    const genders: Record<number, string> = {
+      1: "Male",
+      2: "Female",
+      98: "Don't Know/No response"
     };
 
-    let matchesRace = true;
-    if (filters?.race) {
-      const cat = Number(row["ab17"]);
-      matchesRace = raceGroups[cat] === filters.race;
+    let matchesGender = true;
+    if (filters?.gender && filters.gender.length > 0) {
+      const cat = Number(row["ab22sex"]);
+      matchesGender = filters.gender.includes(genders[cat]);
     }
 
     let matchesAgeGroup = true;
-    if (filters?.age) {
+    if (filters?.age && filters.age.length > 0) {
       const cat = Number(row["ab19_Cat"]);
-      console.log(filters.age);
-      matchesAgeGroup = ageGroups[cat] === filters.age;
+      matchesAgeGroup = filters.age.includes(ageGroups[cat]);
     }
 
-    return matchesOption && matchesRace && matchesAgeGroup;
+    return matchesOption && matchesGender && matchesAgeGroup;
   });
 
   return { count: filtered.length, loading: false, error: null };

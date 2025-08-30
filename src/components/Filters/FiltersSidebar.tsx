@@ -5,12 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFilters } from "@/context/FiltersContext";
 
-const races = [
-  "White/Caucasian",
-  "Black/African American",
-  "Asian",
-  "American Indian/Alaska native",
-  "Other",
+const genders = [
+  "Male",
+  "Female",
+  "Don't Know/No response",
 ];
 
 const ageCategories = [
@@ -32,26 +30,30 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   open = false,
   onClose = () => {},
 }) => {
-  const [selectedAge, setSelectedAge] = useState<string>("");
-  const [selectedRace, setSelectedRace] = useState<string>("");
+  const [selectedAges, setSelectedAges] = useState<string[]>([]);
+  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
   const { setFilters } = useFilters();
 
   useEffect(() => {
-    if (!open) {
-      setSelectedAge("");
-      setSelectedRace("");
-    }
-  }, [open]);
+    setFilters({ age: selectedAges, gender: selectedGenders });
+  }, [selectedAges, selectedGenders, setFilters]);
 
-  useEffect(() => {
-    setFilters({ age: selectedAge, race: selectedRace });
-  }, [selectedAge, selectedRace, setFilters]);
+  const toggleSelection = (
+    value: string,
+    selected: string[],
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    setSelected(
+      selected.includes(value)
+        ? selected.filter((v) => v !== value)
+        : [...selected, value]
+    );
+  };
 
   return (
     <Drawer open={open} onClose={onClose}>
       <div className="flex w-72 flex-col gap-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold">Filters</h2>
 
         <div>
           <label className="mb-2 block text-sm font-medium">Age Group</label>
@@ -59,10 +61,10 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
             {ageCategories.map((ageRange) => (
               <div key={ageRange} className="flex items-center px-2 py-1">
                 <Checkbox
-                  checked={selectedAge === ageRange}
-                  onCheckedChange={(checked) => {
-                    setSelectedAge(checked ? ageRange : "");
-                  }}
+                  checked={selectedAges.includes(ageRange)}
+                  onCheckedChange={() =>
+                    toggleSelection(ageRange, selectedAges, setSelectedAges)
+                  }
                   id={`age-${ageRange}`}
                 />
                 <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
@@ -74,19 +76,19 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Race</label>
+          <label className="mb-2 block text-sm font-medium">Gender</label>
           <div className="flex flex-col gap-2">
-            {races.map((race) => (
-              <div key={race} className="flex items-center px-2 py-1">
+            {genders.map((gender) => (
+              <div key={gender} className="flex items-center px-2 py-1">
                 <Checkbox
-                  checked={selectedRace === race}
-                  onCheckedChange={(checked) => {
-                    setSelectedRace(checked ? race : "");
-                  }}
-                  id={`race-${race}`}
+                  checked={selectedGenders.includes(gender)}
+                  onCheckedChange={() =>
+                    toggleSelection(gender, selectedGenders, setSelectedGenders)
+                  }
+                  id={`gender-${gender}`}
                 />
-                <label htmlFor={`race-${race}`} className="ml-2 text-sm">
-                  {race}
+                <label htmlFor={`gender-${gender}`} className="ml-2 text-sm">
+                  {gender}
                 </label>
               </div>
             ))}
@@ -96,8 +98,8 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
         <Button
           variant="outline"
           onClick={() => {
-            setSelectedAge("");
-            setSelectedRace("");
+            setSelectedAges([]);
+            setSelectedGenders([]);
           }}
           className="mt-2"
         >

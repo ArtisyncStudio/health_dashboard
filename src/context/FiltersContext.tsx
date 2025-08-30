@@ -1,15 +1,15 @@
-// context/FiltersContext.tsx
 "use client";
 import React, { createContext, useContext, useState } from "react";
 
 interface Filters {
-  age: string;
-  race: string;
+  age: string[];
+  gender: string[];
 }
 
 interface FiltersContextType {
   filters: Filters;
   setFilters: (filters: Filters) => void;
+  resetFilters: () => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined);
@@ -17,10 +17,12 @@ const FiltersContext = createContext<FiltersContextType | undefined>(undefined);
 export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [filters, setFilters] = useState<Filters>({ age: "", race: "" });
+  const [filters, setFilters] = useState<Filters>({ age: [], gender: [] });
+
+  const resetFilters = () => setFilters({ age: [], gender: [] });
 
   return (
-    <FiltersContext.Provider value={{ filters, setFilters }}>
+    <FiltersContext.Provider value={{ filters, setFilters, resetFilters }}>
       {children}
     </FiltersContext.Provider>
   );
