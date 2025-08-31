@@ -18,7 +18,11 @@ const FiltersContext = createContext<FiltersContextType | undefined>(undefined);
 export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [filters, setFilters] = useState<Filters>({ age: [], gender: [], income: [] });
+  const [filters, setFilters] = useState<Filters>({
+    age: [],
+    gender: [],
+    income: [],
+  });
 
   const resetFilters = () => setFilters({ age: [], gender: [], income: [] });
 

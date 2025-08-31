@@ -29,7 +29,7 @@ const incomes = [
   "$20,000 to $49,999",
   "$50,000 to 99,999",
   "$100,000 and more",
-]
+];
 
 interface FiltersSidebarProps {
   open?: boolean;
@@ -47,7 +47,11 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   const { setFilters } = useFilters();
 
   useEffect(() => {
-    setFilters({ age: selectedAges, gender: selectedGenders, income: selectedIncomes });
+    setFilters({
+      age: selectedAges,
+      gender: selectedGenders,
+      income: selectedIncomes,
+    });
   }, [selectedAges, selectedGenders, selectedIncomes, setFilters]);
 
   const toggleSelection = (
