@@ -5,6 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFilters } from "@/context/FiltersContext";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 const genders = ["Male", "Female", "Don't Know/No response"];
 
 const ageCategories = [
@@ -49,46 +56,60 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
 
   return (
     <Drawer open={open} onClose={onClose}>
-      <div className="flex w-72 flex-col gap-6 p-6">
-        <div>
-          <label className="mb-2 block text-sm font-medium">Age Group</label>
-          <div className="flex flex-col gap-2">
-            {ageCategories.map((ageRange) => (
-              <div key={ageRange} className="flex items-center px-2 py-1">
-                <Checkbox
-                  checked={selectedAges.includes(ageRange)}
-                  onCheckedChange={() =>
-                    toggleSelection(ageRange, selectedAges, setSelectedAges)
-                  }
-                  id={`age-${ageRange}`}
-                />
-                <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
-                  {ageRange}
-                </label>
+      <div className="flex w-72 flex-col p-6">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Age Group</AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col gap-2">
+                {ageCategories.map((ageRange) => (
+                  <div key={ageRange} className="flex items-center px-2 py-1">
+                    <Checkbox
+                      checked={selectedAges.includes(ageRange)}
+                      onCheckedChange={() =>
+                        toggleSelection(ageRange, selectedAges, setSelectedAges)
+                      }
+                      id={`age-${ageRange}`}
+                    />
+                    <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
+                      {ageRange}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <label className="mb-2 block text-sm font-medium">Gender</label>
-          <div className="flex flex-col gap-2">
-            {genders.map((gender) => (
-              <div key={gender} className="flex items-center px-2 py-1">
-                <Checkbox
-                  checked={selectedGenders.includes(gender)}
-                  onCheckedChange={() =>
-                    toggleSelection(gender, selectedGenders, setSelectedGenders)
-                  }
-                  id={`gender-${gender}`}
-                />
-                <label htmlFor={`gender-${gender}`} className="ml-2 text-sm">
-                  {gender}
-                </label>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Gender</AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col gap-2">
+                {genders.map((gender) => (
+                  <div key={gender} className="flex items-center px-2 py-1">
+                    <Checkbox
+                      checked={selectedGenders.includes(gender)}
+                      onCheckedChange={() =>
+                        toggleSelection(
+                          gender,
+                          selectedGenders,
+                          setSelectedGenders,
+                        )
+                      }
+                      id={`gender-${gender}`}
+                    />
+                    <label
+                      htmlFor={`gender-${gender}`}
+                      className="ml-2 text-sm"
+                    >
+                      {gender}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         <Button
           variant="outline"
