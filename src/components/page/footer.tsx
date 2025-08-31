@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-
+import { motion } from "motion/react";
 import { MdLocationOn, MdPhone, MdEmail } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 px-10 py-12 text-sm text-gray-800">
+    <motion.footer
+      className="bg-gray-100 px-10 py-12 text-sm text-gray-800"
+      initial={{ y: 16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+    >
       <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
         <div>
           <h2 className="mb-4 font-semibold tracking-widest">FOLLOW US</h2>
@@ -166,7 +173,7 @@ const Footer = () => {
       <div className="mt-10 text-center text-xs text-gray-500">
         EIN: 20-5719074 <br />© 2025 All rights reserved.
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
