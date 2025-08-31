@@ -59,7 +59,9 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
       <div className="flex w-72 flex-col p-6">
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Age Group</AccordionTrigger>
+            <AccordionTrigger className="cursor-pointer">
+              Age Group
+            </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-2">
                 {ageCategories.map((ageRange) => (
@@ -70,6 +72,7 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                         toggleSelection(ageRange, selectedAges, setSelectedAges)
                       }
                       id={`age-${ageRange}`}
+                      className="cursor-pointer"
                     />
                     <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
                       {ageRange}
@@ -82,7 +85,9 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
         </Accordion>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Gender</AccordionTrigger>
+            <AccordionTrigger className="cursor-pointer">
+              Gender
+            </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-2">
                 {genders.map((gender) => (
@@ -97,6 +102,7 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                         )
                       }
                       id={`gender-${gender}`}
+                      className="cursor-pointer"
                     />
                     <label
                       htmlFor={`gender-${gender}`}
