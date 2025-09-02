@@ -1,7 +1,7 @@
 import Header from "@/components/page/Heading";
 import descriptions from "@/data/Descriptions";
-import Bargraph from "@/components/charts/bargraph";
-import MainReasonIns from "@/components/charts/mainReasonIns";
+import Bargraph from "@/components/charts/HealthCoverageBarchart";
+import MainReasonIns from "@/components/charts/mainReasonHealthCoverage";
 import Card from "@/components/page/Card";
 import Questions from "@/data/Questions";
 
