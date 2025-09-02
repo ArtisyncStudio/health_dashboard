@@ -9,7 +9,7 @@ const page = () => {
   return (
     <div className="mb-10">
       <Header
-        title="Healthcare Access"
+        title="Air Quality"
         description={descriptions[1]}
         titleSize="text-5xl"
       />
