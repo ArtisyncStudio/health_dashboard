@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFilters } from "@/context/FiltersContext";
 
-const races = [
-  "White/Caucasian",
-  "Black/African American",
-  "Asian",
-  "American Indian/Alaska native",
-  "Other",
-];
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const genders = ["Male", "Female", "Don't Know/No response"];
 
 const ageCategories = [
   "18-24",
@@ -23,6 +24,13 @@ const ageCategories = [
   "75 and older",
 ];
 
+const incomes = [
+  "$0 to $19,999",
+  "$20,000 to $49,999",
+  "$50,000 to 99,999",
+  "$100,000 and more",
+];
+
 interface FiltersSidebarProps {
   open?: boolean;
   onClose?: () => void;
@@ -32,72 +40,133 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   open = false,
   onClose = () => {},
 }) => {
-  const [selectedAge, setSelectedAge] = useState<string>("");
-  const [selectedRace, setSelectedRace] = useState<string>("");
+  const [selectedAges, setSelectedAges] = useState<string[]>([]);
+  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
+  const [selectedIncomes, setSelectedIncomes] = useState<string[]>([]);
 
   const { setFilters } = useFilters();
 
   useEffect(() => {
-    if (!open) {
-      setSelectedAge("");
-      setSelectedRace("");
-    }
-  }, [open]);
+    setFilters({
+      age: selectedAges,
+      gender: selectedGenders,
+      income: selectedIncomes,
+    });
+  }, [selectedAges, selectedGenders, selectedIncomes, setFilters]);
 
-  useEffect(() => {
-    setFilters({ age: selectedAge, race: selectedRace });
-  }, [selectedAge, selectedRace, setFilters]);
+  const toggleSelection = (
+    value: string,
+    selected: string[],
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
+    setSelected(
+      selected.includes(value)
+        ? selected.filter((v) => v !== value)
+        : [...selected, value],
+    );
+  };
 
   return (
     <Drawer open={open} onClose={onClose}>
-      <div className="flex w-72 flex-col gap-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold">Filters</h2>
-
-        <div>
-          <label className="mb-2 block text-sm font-medium">Age Group</label>
-          <div className="flex flex-col gap-2">
-            {ageCategories.map((ageRange) => (
-              <div key={ageRange} className="flex items-center px-2 py-1">
-                <Checkbox
-                  checked={selectedAge === ageRange}
-                  onCheckedChange={(checked) => {
-                    setSelectedAge(checked ? ageRange : "");
-                  }}
-                  id={`age-${ageRange}`}
-                />
-                <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
-                  {ageRange}
-                </label>
+      <div className="flex w-72 flex-col p-6">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="cursor-pointer">
+              Age Group
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col gap-2">
+                {ageCategories.map((ageRange) => (
+                  <div key={ageRange} className="flex items-center px-2 py-1">
+                    <Checkbox
+                      checked={selectedAges.includes(ageRange)}
+                      onCheckedChange={() =>
+                        toggleSelection(ageRange, selectedAges, setSelectedAges)
+                      }
+                      id={`age-${ageRange}`}
+                      className="cursor-pointer"
+                    />
+                    <label htmlFor={`age-${ageRange}`} className="ml-2 text-sm">
+                      {ageRange}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <label className="mb-2 block text-sm font-medium">Race</label>
-          <div className="flex flex-col gap-2">
-            {races.map((race) => (
-              <div key={race} className="flex items-center px-2 py-1">
-                <Checkbox
-                  checked={selectedRace === race}
-                  onCheckedChange={(checked) => {
-                    setSelectedRace(checked ? race : "");
-                  }}
-                  id={`race-${race}`}
-                />
-                <label htmlFor={`race-${race}`} className="ml-2 text-sm">
-                  {race}
-                </label>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="cursor-pointer">
+              Gender
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col gap-2">
+                {genders.map((gender) => (
+                  <div key={gender} className="flex items-center px-2 py-1">
+                    <Checkbox
+                      checked={selectedGenders.includes(gender)}
+                      onCheckedChange={() =>
+                        toggleSelection(
+                          gender,
+                          selectedGenders,
+                          setSelectedGenders,
+                        )
+                      }
+                      id={`gender-${gender}`}
+                      className="cursor-pointer"
+                    />
+                    <label
+                      htmlFor={`gender-${gender}`}
+                      className="ml-2 text-sm"
+                    >
+                      {gender}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="cursor-pointer">
+              Income
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col gap-2">
+                {incomes.map((income) => (
+                  <div key={income} className="flex items-center px-2 py-1">
+                    <Checkbox
+                      checked={selectedIncomes.includes(income)}
+                      onCheckedChange={() =>
+                        toggleSelection(
+                          income,
+                          selectedIncomes,
+                          setSelectedIncomes,
+                        )
+                      }
+                      id={`Income-${income}`}
+                      className="cursor-pointer"
+                    />
+                    <label
+                      htmlFor={`Income-${income}`}
+                      className="ml-2 text-sm"
+                    >
+                      {income}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
         <Button
           variant="outline"
           onClick={() => {
-            setSelectedAge("");
-            setSelectedRace("");
+            setSelectedAges([]);
+            setSelectedGenders([]);
+            setSelectedIncomes([]);
           }}
           className="mt-2"
         >

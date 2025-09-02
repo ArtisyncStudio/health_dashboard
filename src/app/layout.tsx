@@ -1,5 +1,4 @@
 import "./globals.css";
-//Continue importing fonts
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { ReactQueryClientProvider } from "@/utils/react-query";
 import Navbar from "@/components/page/navbar";
