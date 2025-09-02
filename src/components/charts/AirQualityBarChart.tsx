@@ -30,22 +30,31 @@ const chartConfig = {
 export default function ChartBarDefault() {
   const { filters } = useFilters();
 
-  const { count, loading } = returnData("1", "ac25g", filters);
-  const { count: count1 } = returnData("2", "ac25g", filters);
+  const { count, loading } = returnData("1", "AirQuality", filters);
+  const { count: count1 } = returnData("2", "AirQuality", filters);
+  const { count: count2 } = returnData("3", "AirQuality", filters);
+  const { count: count3 } = returnData("4", "AirQuality", filters);
+  const { count: count4 } = returnData("5", "AirQuality", filters);
 
   const chartData = [
-    { response: "Yes", responses: count },
+    { response: "Poor", responses: count },
     {
-      response: "No",
+      response: "Fair",
       responses: count1,
+    },
+    { response: "Good", responses: count2 },
+    { response: "Very Good", responses: count3 },
+    {
+      response: "Excellent",
+      responses: count4,
     },
   ];
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Mental Health Bar Chart</CardTitle>
-        <CardDescription>Mental Problem breakdown</CardDescription>
+        <CardTitle>Air Quality Bar Chart</CardTitle>
+        <CardDescription>Air Quality Breakdown</CardDescription>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -56,7 +65,7 @@ export default function ChartBarDefault() {
               accessibilityLayer
               data={chartData}
               margin={{
-                bottom: 0,
+                bottom: 60,
                 top: 20,
               }}
             >
@@ -67,7 +76,7 @@ export default function ChartBarDefault() {
                 tickMargin={10}
                 axisLine={false}
                 interval={0}
-                height={40}
+                height={1}
                 tick={<WrappedTick />}
               />
               <ChartTooltip
@@ -89,7 +98,7 @@ export default function ChartBarDefault() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="text-muted-foreground leading-none">
-          Showing total Mental Health Responses
+          Showing total Air Quality Responses
         </div>
       </CardFooter>
     </Card>
