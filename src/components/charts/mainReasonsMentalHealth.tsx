@@ -39,18 +39,6 @@ export default function ChartBarDefault() {
       response: "No",
       responses: count1,
     },
-    // { response: "Became divorced/ or separated", responses: count2 },
-    // { response: "Spouse or parent died", responses: count3 },
-    // {
-    //   response: "Became ineligible because of age or left school",
-    //   responses: count4,
-    // },
-    // {
-    //   response: "Employer doesn't offer or stopped offering coverage",
-    //   responses: count5,
-    // },
-    // { response: "Became ineligible (age/school)", responses: count6 },
-    // { response: "Employer stopped offering coverage", responses: count7 },
   ];
 
   return (
