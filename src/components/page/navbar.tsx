@@ -2,6 +2,8 @@
 import { useState, useEffect, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
+
 import HarcLogo from "@/public/images/Harc_Logo.webp";
 import Dropdown from "@/components/page/dropdown";
 import Sidebar from "@/components/page/sidebar";
@@ -20,7 +22,14 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-10">
+      {/* NAVBAR with fade-in only */}
+      <motion.nav
+        className="sticky top-0 z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        style={{ display: "block" }} // preserve original layout
+      >
         {mounted && (
           <button
             className="absolute top-4 left-4 z-30 md:hidden"
@@ -80,6 +89,7 @@ const Navbar: React.FC = () => {
               />
             </svg>
           </button>
+
           <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-end md:gap-6 md:p-4">
             <div className="flex flex-col gap-2 md:flex-row md:gap-5">
               <Link
@@ -191,7 +201,9 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         </aside>
-      </nav>
+      </motion.nav>
+
+      {/* Logo section unchanged */}
       <Link
         href="/"
         className="flex justify-center px-6 pb-4 md:justify-start md:px-4"

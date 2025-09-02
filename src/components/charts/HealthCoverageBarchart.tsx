@@ -33,8 +33,8 @@ export default function ChartBarDefault() {
   const { count: count1 } = returnData("2", "aa4", filters);
 
   const chartData = [
-    { response: "No", percentage: count1 },
-    { response: "Yes", percentage: count },
+    { response: "No", responses: count1 },
+    { response: "Yes", responses: count },
   ];
 
   return (
@@ -60,9 +60,9 @@ export default function ChartBarDefault() {
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="percentage" fill="#008da8" radius={8}>
+              <Bar dataKey="responses" fill="#008da8" radius={8}>
                 <LabelList
-                  dataKey="percentage"
+                  dataKey="responses"
                   position="top"
                   offset={12}
                   className="fill-foreground"
