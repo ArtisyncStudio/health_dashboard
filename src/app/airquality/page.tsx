@@ -10,7 +10,7 @@ const page = () => {
     <div className="mb-10">
       <Header
         title="Air Quality"
-        description={descriptions[1]}
+        description={descriptions[3]}
         titleSize="text-5xl"
       />
       <div className="mt-10 flex flex-col items-center md:flex-row">
