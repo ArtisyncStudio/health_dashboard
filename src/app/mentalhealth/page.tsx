@@ -4,7 +4,6 @@ import Questions from "@/data/Questions";
 import Card from "@/components/page/Card";
 import MainReasonsMH from "@/components/charts/mainReasonsMentalHealth";
 
-
 const page = () => {
   return (
     <div className="my-10">
