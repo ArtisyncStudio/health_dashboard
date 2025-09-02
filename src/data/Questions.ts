@@ -3,6 +3,8 @@ const questions: string[] = [
   "What is the main reason you are without health insurance coverage? Select only one option.",
   "Have you had any emotional, mental, and behavioral problems such as stress, anxiety, or depression that concerned you during the past 12 months?",
   "During the past 12 months, did you ever seriously consider attempting suicide?",
+  "How would you rate the air quality in your neighborhood?",
+  "Does poor air quality ever stop you form doing outdoor activities in your neighborhood?",
 ];
 
 export default questions;

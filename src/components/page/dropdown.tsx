@@ -63,9 +63,7 @@ const Dropdown: React.FC = () => {
               initial={MenuAnimation(index).initial}
               animate={MenuAnimation(index).animate}
               transition={{
-                ...MenuAnimation(index).transition,
-                delay: (index + 1) * 0.05 + 0.25,
-                duration: 0.3,
+                duration: 0.1,
                 ease: easeIn,
               }}
             >
