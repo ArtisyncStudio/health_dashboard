@@ -70,3 +70,5 @@ npm run eslint
 ```bash
 npm run build
 ```
+
+Using VERCEL to publish prod.
