@@ -53,12 +53,12 @@ export function ChartPieLabel() {
 
   const { count: countYes, loading: loadingYes } = returnData(
     "1",
-    "aa4",
+    "ad1",
     filters,
   );
   const { count: countNo, loading: loadingNo } = returnData(
     "2",
-    "aa4",
+    "ad1",
     filters,
   );
 
